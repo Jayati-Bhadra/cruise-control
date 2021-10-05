@@ -1,0 +1,55 @@
+open_system('ACCTestBenchExample')
+im('ACCTestBenchExample','StopTime','15') %Simulate 15 seconds
+sim('ACCTestBenchExample') %Simulate to end of scenario
+ans = 
+
+  Simulink.SimulationOutput:
+                logsout: [1x1 Simulink.SimulationData.Dataset] 
+                   tout: [151x1 double] 
+
+     SimulationMetadata: [1x1 Simulink.SimulationMetadata] 
+           ErrorMessage: [0x0 char] helperPlotACCResults(logsout,default_spacing,time_gap)
+hasMPCLicense = license('checkout','MPC_Toolbox');
+if hasMPCLicense
+    controller_type = 2;
+    sim('ACCTestBenchExample','StopTime','15') %Simulate 15 seconds
+    sim('ACCTestBenchExample') %Simulate to end of scenario
+else
+    load data_mpc
+end-->Converting model to discrete time.
+-->Assuming output disturbance added to measured output channel #2 is integrated white noise.
+   Assuming no disturbance added to measured output channel #1.
+-->The "Model.Noise" property of the "mpc" object is empty. Assuming white noise on each measured output channel.
+
+ans = 
+
+  Simulink.SimulationOutput:
+                logsout: [1x1 Simulink.SimulationData.Dataset] 
+                   tout: [151x1 double] 
+
+     SimulationMetadata: [1x1 Simulink.SimulationMetadata] 
+           ErrorMessage: [0x0 char] 
+
+-->Converting model to discrete time.
+-->Assuming output disturbance added to measured output channel #2 is integrated white noise.
+   Assuming no disturbance added to measured output channel #1.
+   -->The "Model.Noise" property of the "mpc" object is empty. Assuming white noise on each measured output channel.
+   helperPlotACCResults(logsout,default_spacing,time_gap)
+open_system('ACCTestBenchExample/ACC with Sensor Fusion')
+open_system('ACCWithSensorFusionMdlRef/Tracking and Sensor Fusion')
+open_system('ACCWithSensorFusionMdlRef/Adaptive Cruise Controller/ACC Classical')
+open_system('ACCWithSensorFusionMdlRef/Adaptive Cruise Controller/ACC Model Predictive Control')
+open_system('ACCTestBenchExample/Vehicle and Environment')
+open_system('ACCTestBenchExample/Vehicle and Environment/Actors and Sensor Simulation')
+hasEmbeddedCoderLicense = license('checkout','RTW_Embedded_Coder')
+You can generate a C function for the model and explore the code generation report by running:
+
+if hasEmbeddedCoderLicense
+    rtwbuild('ACCWithSensorFusionMdlRef')
+end
+You can verify that the compiled C code behaves as expected using software-in-the-loop (SIL) simulation. To simulate the ACCWithSensorFusionMdlRef referenced model in SIL mode, use:
+
+if hasEmbeddedCoderLicense
+    set_param('ACCTestBenchExample/ACC with Sensor Fusion',...
+        'SimulationMode','Software-in-the-loop (SIL)')
+endbdclose all
